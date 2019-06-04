@@ -7,6 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
+/*Camada de dominio, contendo a tributos que serao criados automatimente no 
+ * no banco de dados... 
+*/
 @Entity
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
