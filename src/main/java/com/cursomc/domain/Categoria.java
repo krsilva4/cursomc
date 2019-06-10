@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /*Camada de dominio, contendo a tributos que serao criados automatimente no 
  * no banco de dados... 
 */
@@ -20,7 +22,11 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-
+	
+// Definindo que categoria vai possuir varios produtos exemplo(categoria Informatica possuir 
+// computador, mouse, impressora.	
+	@JsonManagedReference
+//Realizando mapeamento da criancao da nova tabela de muitos para muitos...	
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();
 
