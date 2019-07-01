@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import com.cursomc.domain.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Cliente implements Serializable {
@@ -30,6 +31,8 @@ public class Cliente implements Serializable {
 	// um para muitos exemplo(um clientes tem varios enderecos)
 	@OneToMany(mappedBy = "cliente")
 	// Criando chave estrangeira na tabela de cidade
+	@JsonManagedReference
+	// Lista enderecos por clinte
 	private List<Endereco> enderecos = new ArrayList<>();
 
 	// Para nao precisa criar classe.
