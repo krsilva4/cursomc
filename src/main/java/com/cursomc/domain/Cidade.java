@@ -17,7 +17,6 @@ public class Cidade implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	
 	//Definindo um para muitos, Exemplo (cidade tem um estado)			
 	@ManyToOne
 	//Criando chave estrangeira na tabela de cidade
@@ -25,7 +24,6 @@ public class Cidade implements Serializable{
 	private Estado estado;
 
 	public Cidade() {
-
 	}
 
 	public Cidade(Integer id, String nome, Estado estado) {

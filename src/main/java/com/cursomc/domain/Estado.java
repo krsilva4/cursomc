@@ -21,9 +21,8 @@ public class Estado implements Serializable {
 	//Definindo um para muitos, Exemplo (estado tem varias cidades)		
 	@OneToMany(mappedBy = "estado")
 	private List<Cidade> cidades = new ArrayList<>();
-
+	
 	public Estado() {
-
 	}
 
 	public Estado(Integer id, String nome) {
