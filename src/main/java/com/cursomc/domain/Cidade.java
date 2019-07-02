@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Cidade implements Serializable{
 
@@ -23,7 +21,6 @@ public class Cidade implements Serializable{
 	@ManyToOne
 	//Criando chave estrangeira na tabela de cidade
 	@JoinColumn(name = "estado_id")
-	@JsonManagedReference
 	// Lista estado de cidade mandante e cidade
 	private Estado estado;
 
