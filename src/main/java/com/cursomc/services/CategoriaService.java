@@ -20,9 +20,18 @@ public class CategoriaService {
 	public Categoria buscar(Integer id) {
 		Categoria obj = repo.findOne(id);
 // Tratamento de exceção personalizada...		
-		if(obj == null) {
-			throw new ObjectNotFoundException("Objeto nao encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName());
+		if (obj == null) {
+			throw new ObjectNotFoundException(
+					"Objeto nao encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName());
 		}
 		return obj;
+	}
+
+	/*
+	 * Medoto responsavel por criar uma nova categoria
+	 */
+	public Categoria insert(Categoria obj) {
+		obj.setId(null);
+		return repo.save(obj);
 	}
 }
