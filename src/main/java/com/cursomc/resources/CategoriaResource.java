@@ -40,7 +40,7 @@ public class CategoriaResource {
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
 		obj = service.insert(obj);
-		// Retornando String do obj cadastrado.
+		// Retornando String do obj cadastrado, continuando no windows.
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
