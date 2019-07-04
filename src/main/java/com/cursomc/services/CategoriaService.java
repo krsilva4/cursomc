@@ -1,10 +1,13 @@
 package com.cursomc.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.cursomc.domain.Categoria;
+import com.cursomc.dto.CategoriaDTO;
 import com.cursomc.repositories.CategoriaRepository;
 import com.cursomc.services.exceptions.DataIntegrityException;
 import com.cursomc.services.exceptions.ObjectNotFoundException;
@@ -37,14 +40,15 @@ public class CategoriaService {
 		obj.setId(null);
 		return repo.save(obj);
 	}
-	
+
 	/*
 	 * Medoto responsavel por atualizar a categoria
 	 */
 	public Categoria update(Categoria obj) {
- 		find(obj.getId());
+		find(obj.getId());
 		return repo.save(obj);
 	}
+
 	/*
 	 * Medoto responsavel por deletar a categoria
 	 */
@@ -52,10 +56,15 @@ public class CategoriaService {
 		find(id);
 		try {
 			repo.delete(id);
-		}catch(DataIntegrityViolationException e){
+		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException(msgErro);
 		}
-		
+
+	}
+
+	public List<Categoria> fidAll() {
+		// TODO Auto-generated method stub
+		return repo.findAll();
 	}
 
 }

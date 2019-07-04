@@ -1,6 +1,8 @@
 package com.cursomc.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.cursomc.domain.Categoria;
+import com.cursomc.dto.CategoriaDTO;
 import com.cursomc.services.CategoriaService;
 
 /*Camada controlares rest - responsavel para envio de 
@@ -30,9 +33,6 @@ public class CategoriaResource {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
-
-		System.out.print("Chegou no consulta");
-		System.out.print("valor do objeto " + id.toString());
 		Categoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -50,8 +50,6 @@ public class CategoriaResource {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
-		System.out.print("Chegou no update");
-		System.out.print("valor do objeto " + "id " + obj.getId() + "nome " + obj.getNome());
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
@@ -65,6 +63,22 @@ public class CategoriaResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 
+	}
+
+	/*
+	 * Medoto responsavel por listar todas as categorias, e para retirar os produtos
+	 * da categoria e feita uma convercao para categoriaDTO para utilizar os campos
+	 * que enterezao...
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<Categoria> list = service.fidAll();
+		List<CategoriaDTO> listDTO = new ArrayList<CategoriaDTO>();
+		for (Categoria c : list) {
+			CategoriaDTO catTDO = new CategoriaDTO(c);
+			listDTO.add(catTDO);
+		}
+		return ResponseEntity.ok().body(listDTO);
 	}
 
 }
