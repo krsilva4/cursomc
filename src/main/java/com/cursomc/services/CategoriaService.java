@@ -1,10 +1,12 @@
 package com.cursomc.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.cursomc.domain.Categoria;
 import com.cursomc.repositories.CategoriaRepository;
+import com.cursomc.services.exceptions.DataIntegrityException;
 import com.cursomc.services.exceptions.ObjectNotFoundException;
 
 /*Camada de servicos.
@@ -14,6 +16,7 @@ import com.cursomc.services.exceptions.ObjectNotFoundException;
 @Service
 public class CategoriaService {
 
+	private final String msgErro = "Nao e possivel excluir uma categoria que possui produtos!";
 	@Autowired
 	private CategoriaRepository repo;
 
@@ -42,4 +45,17 @@ public class CategoriaService {
  		find(obj.getId());
 		return repo.save(obj);
 	}
+	/*
+	 * Medoto responsavel por deletar a categoria
+	 */
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.delete(id);
+		}catch(DataIntegrityViolationException e){
+			throw new DataIntegrityException(msgErro);
+		}
+		
+	}
+
 }

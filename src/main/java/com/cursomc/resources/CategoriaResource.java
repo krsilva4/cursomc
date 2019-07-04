@@ -30,9 +30,9 @@ public class CategoriaResource {
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
-		
+
 		System.out.print("Chegou no consulta");
-		System.out.print("valor do objeto "+id.toString() );
+		System.out.print("valor do objeto " + id.toString());
 		Categoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -40,20 +40,31 @@ public class CategoriaResource {
 	/*
 	 * Medoto responsavel por insert novo obj.
 	 */
-	@RequestMapping(method=RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
 		obj = service.insert(obj);
 		// Retornando String do obj cadastrado, continuando no windows.
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	@RequestMapping(value = "/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Categoria obj , @PathVariable Integer id){
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
 		System.out.print("Chegou no update");
-		System.out.print("valor do objeto "+ "id "+obj.getId() + "nome "+ obj.getNome());
+		System.out.print("valor do objeto " + "id " + obj.getId() + "nome " + obj.getNome());
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
-	
+
+	/*
+	 * Medoto responsavel por realizar delete por ID.
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+
+	}
+
 }
