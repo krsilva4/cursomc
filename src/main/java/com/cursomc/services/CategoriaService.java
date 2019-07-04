@@ -17,7 +17,7 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository repo;
 
-	public Categoria buscar(Integer id) {
+	public Categoria find(Integer id) {
 		Categoria obj = repo.findOne(id);
 // Tratamento de exceção personalizada...		
 		if (obj == null) {
@@ -32,6 +32,14 @@ public class CategoriaService {
 	 */
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
+		return repo.save(obj);
+	}
+	
+	/*
+	 * Medoto responsavel por atualizar a categoria
+	 */
+	public Categoria update(Categoria obj) {
+ 		find(obj.getId());
 		return repo.save(obj);
 	}
 }

@@ -17,7 +17,7 @@ public class PedidoService {
 	@Autowired
 	private PedidoRepository repo;
 
-	public Pedido buscar(Integer id) {
+	public Pedido find(Integer id) {
 		Pedido obj = repo.findOne(id);
 // Tratamento de exceção personalizada...		
 		if(obj == null) {
