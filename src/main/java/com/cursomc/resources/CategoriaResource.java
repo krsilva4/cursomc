@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +44,8 @@ public class CategoriaResource {
 	 * Medoto responsavel por insert novo obj.
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+	public ResponseEntity<Void> insert(@Validated @RequestBody CategoriaDTO objDTO) {
+		Categoria obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		// Retornando String do obj cadastrado, continuando no windows.
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -51,7 +53,8 @@ public class CategoriaResource {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@Validated @RequestBody CategoriaDTO objDTO, @PathVariable Integer id) {
+		Categoria obj = service.fromDTO(objDTO);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.cursomc.domain.Categoria;
+import com.cursomc.dto.CategoriaDTO;
 import com.cursomc.repositories.CategoriaRepository;
 import com.cursomc.services.exceptions.DataIntegrityException;
 import com.cursomc.services.exceptions.ObjectNotFoundException;
@@ -68,12 +69,21 @@ public class CategoriaService {
 		// TODO Auto-generated method stub
 		return repo.findAll();
 	}
+
 	/*
 	 * Medoto responsavel por paginacao e ordenacao dos registros.
 	 */
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		PageRequest pageRequest = new PageRequest(page,linesPerPage,Direction.valueOf(direction),orderBy);
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+
+	/*
+	 * Medoto responsavel para converter uma DTO para categoria. 
+	 */
+	public Categoria fromDTO(CategoriaDTO obj) {
+		Categoria categoria = new Categoria(obj.getId(), obj.getNome());
+		return categoria;
 	}
 
 }
