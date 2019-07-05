@@ -47,9 +47,11 @@ public class CategoriaService {
 	/*
 	 * Medoto responsavel por atualizar a categoria
 	 */
+
 	public Categoria update(Categoria obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		Categoria newObj = find(obj.getId());
+		updateData(obj , newObj); 
+		return repo.save(newObj); 
 	}
 
 	/*
@@ -85,5 +87,10 @@ public class CategoriaService {
 		Categoria categoria = new Categoria(obj.getId(), obj.getNome());
 		return categoria;
 	}
-
+	/*
+	 * Medoto responsavel para conpletar dados vindo da API com dados vindo da tabela.
+	 */
+	private void updateData(Categoria obj , Categoria newObj) {
+		newObj.setNome(obj.getNome());
+	}
 }
