@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public abstract class Pagamento implements Serializable{
 
 	/**
-	 * 
+	 * Classe modelo de pagamento...
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
