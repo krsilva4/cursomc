@@ -27,7 +27,7 @@ import com.cursomc.services.exceptions.ObjectNotFoundException;
 @Service
 public class ClienteService {
 
-	private final String msgErro = "Nao e possivel excluir, porque ha entidades relacionadas!";
+	private final String msgErro = "Nao e possivel excluir, porque ha pedidos relacionadas!";
 	@Autowired
 	private ClienteRepository repo;
 
