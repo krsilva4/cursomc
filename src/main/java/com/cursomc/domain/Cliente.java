@@ -38,7 +38,7 @@ public class Cliente implements Serializable {
 
 	// Para nao precisa criar classe.
 	@ElementCollection
-	@CollectionTable(name = "TELEFOME")
+	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefone = new HashSet<>();
 
 	public Cliente() {

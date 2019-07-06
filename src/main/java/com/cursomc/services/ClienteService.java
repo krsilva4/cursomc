@@ -9,10 +9,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.cursomc.domain.Cidade;
 import com.cursomc.domain.Cliente;
-import com.cursomc.domain.Cliente;
+import com.cursomc.domain.Endereco;
+import com.cursomc.domain.enums.TipoCliente;
 import com.cursomc.dto.ClienteDTO;
+import com.cursomc.dto.ClienteNewDTO;
 import com.cursomc.repositories.ClienteRepository;
+import com.cursomc.repositories.EnderecoRepository;
 import com.cursomc.services.exceptions.DataIntegrityException;
 import com.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -27,6 +31,9 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository repo;
 
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+
 	public Cliente find(Integer id) {
 		Cliente obj = repo.findOne(id);
 // Tratamento de exceção personalizada...		
@@ -40,9 +47,12 @@ public class ClienteService {
 	/*
 	 * Medoto responsavel por criar uma nova cliente
 	 */
+
 	public Cliente insert(Cliente obj) {
 		obj.setId(null);
-		return repo.save(obj);
+		repo.save(obj);
+		enderecoRepository.save(obj.getEnderecos());
+		return obj;
 	}
 
 	/*
@@ -50,7 +60,7 @@ public class ClienteService {
 	 */
 	public Cliente update(Cliente obj) {
 		Cliente newObj = find(obj.getId());
-		updateData(obj , newObj); 
+		updateData(obj, newObj);
 		return repo.save(newObj);
 	}
 
@@ -84,12 +94,36 @@ public class ClienteService {
 	 * Medoto responsavel para converter uma DTO para cliente.
 	 */
 	public Cliente fromDTO(ClienteDTO obj) {
-		return new Cliente(obj.getId(), obj.getNome(), obj.getEmail(), null , null);
+		return new Cliente(obj.getId(), obj.getNome(), obj.getEmail(), null, null);
 	}
+
 	/*
-	 * Medoto responsavel para conpletar dados vindo da API com dados vindo da tabela.
+	 * Medoto responsavel para converter um ClienteNewDTO.
 	 */
-	private void updateData(Cliente obj , Cliente newObj) {
+	public Cliente fromDTO(ClienteNewDTO obj) {
+		Cliente cli = new Cliente(null, obj.getNome(), obj.getEmail(), obj.getCpfOuCnpj(),
+				TipoCliente.toEnum(obj.getTipo()));
+		Cidade cid = new Cidade(obj.getCidadeId(), null, null);
+		Endereco end = new Endereco(null, obj.getLogradouro(), obj.getComplemento(), obj.getBairro(),
+				obj.getComplemento(), cli, cid, obj.getCidadeId());
+		cli.getEnderecos().add(end);
+		cli.getTelefone().add(obj.getTelefone1());
+		System.out.print("Telefone 1" + obj.getTelefone1() + "Telefone 2" + obj.getTelefone2());
+		if (obj.getTelefone2() != null) {
+			cli.getTelefone().add(obj.getTelefone2());
+		}
+		if (obj.getTelefone3() != null) {
+			cli.getTelefone().add(obj.getTelefone3());
+		}
+
+		return cli;
+	}
+
+	/*
+	 * Medoto responsavel para conpletar dados vindo da API com dados vindo da
+	 * tabela.
+	 */
+	private void updateData(Cliente obj, Cliente newObj) {
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
 	}
