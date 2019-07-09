@@ -92,11 +92,11 @@ public class Pedido implements Serializable {
 		this.cliente = cliente;
 	}
 
-	public Endereco getEnderecoDeEntregar() {
+	public Endereco getEnderecoDeEntrega() {
 		return enderecoDeEntrega;
 	}
 
-	public void setEnderecoDeEntregar(Endereco enderecoDeEntrega) {
+	public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 
