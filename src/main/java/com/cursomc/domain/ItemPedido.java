@@ -7,15 +7,14 @@ import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
-public class ItemPedido implements Serializable{
+public class ItemPedido implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//Criando ID composto com classe auxiliar.
+	// Criando ID composto com classe auxiliar.
 	@JsonIgnore
 	// jsonIgnore para a classe nao ser serelezada...
 	@EmbeddedId
@@ -23,7 +22,7 @@ public class ItemPedido implements Serializable{
 	private Double desconto;
 	private Integer quantidade;
 	private Double preco;
-	
+
 	public ItemPedido() {
 	}
 
@@ -36,15 +35,21 @@ public class ItemPedido implements Serializable{
 		this.preco = preco;
 	}
 
+	public Double getSubTotal() {
+		return (preco - desconto) * quantidade;
+
+	}
+// Calcular valor de um sub pedido.
 	public Produto getProduto() {
 		return id.getProduto();
 	}
+
 	@JsonIgnore
 	// jsonIgnore para a classe nao ser serelezada...
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
-	
+
 	public ItemPedidoPK getId() {
 		return id;
 	}
@@ -101,6 +106,5 @@ public class ItemPedido implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
+
 }
