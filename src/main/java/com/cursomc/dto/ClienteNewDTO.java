@@ -15,7 +15,7 @@ public class ClienteNewDTO implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	// Dados do cliente
-	//Realizando consistencia no campo abaixo
+	// Realizando consistencia no campo abaixo
 	private Integer id;
 	@NotEmpty(message = "Preenchimento obrigatorio!")
 	@Length(min = 5, max = 80, message = "O tamanho deve ser entre 5 a 80 caracteres")
@@ -25,7 +25,10 @@ public class ClienteNewDTO implements Serializable {
 	private String email;
 	@NotEmpty(message = "Preenchimento obrigatorio!")
 	private String cpfOuCnpj;
+
 	private Integer tipo;
+	@NotEmpty(message = "Preenchimento obrigatorio!")
+	private String senha;
 	// Dados do endereco
 	private String logradouro;
 	private Integer numero;
@@ -37,7 +40,7 @@ public class ClienteNewDTO implements Serializable {
 	private String telefone1;
 	private String telefone2;
 	private String telefone3;
-	
+
 	// Dados da cidade
 	private Integer cidadeId;
 
@@ -154,6 +157,14 @@ public class ClienteNewDTO implements Serializable {
 
 	public void setCidadeId(Integer cidadeId) {
 		this.cidadeId = cidadeId;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }
