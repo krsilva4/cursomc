@@ -55,7 +55,6 @@ public class PedidoService {
 	/*
 	 * Medoto responsavel por criar uma nova categoria
 	 */
-	@Transactional(readOnly = true)
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
@@ -75,7 +74,7 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.save(obj.getItens());
-		 emailService.sendOrderConfirmationEmail(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
 }
