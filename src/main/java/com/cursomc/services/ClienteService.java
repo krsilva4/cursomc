@@ -1,6 +1,5 @@
 package com.cursomc.services;
 
-import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 
@@ -47,12 +46,12 @@ public class ClienteService {
 
 	public Cliente find(Integer id) {
 		Cliente obj = repo.findOne(id);
-		
+
 		UserSS user = UserService.authenticated();
-		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
 			throw new AuthorizationException("Acesso negado");
 		}
-		 
+
 // Tratamento de exceção personalizada...		
 		if (obj == null) {
 			throw new ObjectNotFoundException(
@@ -111,7 +110,7 @@ public class ClienteService {
 	 * Medoto responsavel para converter uma DTO para cliente.
 	 */
 	public Cliente fromDTO(ClienteDTO obj) {
-		return new Cliente(obj.getId(), obj.getNome(), obj.getEmail(), null, null,null);
+		return new Cliente(obj.getId(), obj.getNome(), obj.getEmail(), null, null, null);
 	}
 
 	/*
@@ -144,7 +143,19 @@ public class ClienteService {
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
 	}
-	public URI uploadProfilePicture(MultipartFile multipartFile) {	
-		return s3Service.uploadFile(multipartFile);
+
+	/*
+	 * Medoto responsavel para gravar imagem na tabela.
+	 */
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		URI uri = s3Service.uploadFile(multipartFile);
+		Cliente cli = repo.findOne(user.getId());
+		cli.setImageUrl(uri.toString());
+		repo.save(cli);
+		return uri;
 	}
 }
