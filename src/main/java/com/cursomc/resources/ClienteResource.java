@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,6 +62,7 @@ public class ClienteResource {
 	/*
 	 * Medoto responsavel por realizar delete por ID.
 	 */
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
@@ -73,6 +75,7 @@ public class ClienteResource {
 	 * da categoria e feita uma convercao para categoriaDTO para utilizar os campos
 	 * que enterezao...
 	 */
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ClienteDTO>> findAll() {
 		List<Cliente> list = service.fidAll();
@@ -88,7 +91,9 @@ public class ClienteResource {
 	 * Medoto responsavel por listar todas as categorias por pagina, e para retirar
 	 * os produtos da categoria e feita uma convercao para categoriaDTO para
 	 * utilizar os campos que enterezao...
+	 * 
 	 */
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public ResponseEntity<Page<ClienteDTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
