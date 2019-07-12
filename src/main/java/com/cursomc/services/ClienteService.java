@@ -50,7 +50,7 @@ public class ClienteService {
 
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
-	
+
 	@Value("${img.profile.size}")
 	private Integer size;
 
@@ -70,6 +70,7 @@ public class ClienteService {
 		return obj;
 	}
 
+	
 	/*
 	 * Medoto responsavel por criar uma nova cliente
 	 */
@@ -106,6 +107,23 @@ public class ClienteService {
 	public List<Cliente> fidAll() {
 		// TODO Auto-generated method stub
 		return repo.findAll();
+	}
+
+	/*
+	 * Medoto responsavel por buscar cliente por email.
+	 */
+	public Cliente findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+
+		Cliente obj = repo.findByEmail(email);
+		if (obj == null) {
+			throw new ObjectNotFoundException(
+					"Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Cliente.class.getName());
+		}
+		return obj;
 	}
 
 	/*
