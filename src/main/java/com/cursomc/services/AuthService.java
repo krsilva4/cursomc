@@ -2,6 +2,7 @@ package com.cursomc.services;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ public class AuthService {
 	@Autowired
 	private BCryptPasswordEncoder pe;
 	
+
 	@Autowired
 	private EmailService emailService;
 	
